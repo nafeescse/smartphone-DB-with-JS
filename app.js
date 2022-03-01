@@ -60,7 +60,27 @@ const detailsLoad = id => {
 }
 
 const displayDetails = details => {
+    console.log(details);
 
-    console.log(details.releaseDate);
+    const display = document.getElementById('details-card');
+    const div = document.createElement('div');
+    // div.classList.add('div');
+    div.innerHTML = `
+                <div class="row card rounded-lg ">
+                <div class="col">
+                <img src="${details.image}" class="card-img-top w-25 mx-auto my-4">
+                </div>
+                <div class="col">
+                <div class="card-body d-flex flex-column  align-items-center">
+                <h2> <span class="fw-bold">Brand:</span> ${details.brand}</h2>
+                <h2> <span class="fw-bold">Model:</span> ${details.name}</h2>
+                <h2> <span class="fw-bold">Release :</span> ${details.releaseDate}</h2>
+                <h2> <span class="fw-bold">Bluetooth:</span> ${details.others.Bluetooth}</h2>
+                <h2> <span class="fw-bold">Sensors:</span> ${details.mainFeatures.sensors}</h2>
+                </div>
+                </div>
+                </div>
+        `;
+    display.appendChild(div);
 
 }
