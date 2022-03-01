@@ -1,9 +1,16 @@
+// Function for searching phones
 const searchPhone = () => {
     const searchField = document.getElementById('searchField');
     const searchText = searchField.value;
 
     if (searchField.value == '') {
-        window.alert('Please search something...')
+        swal({
+            title: "Oppps !!",
+            text: "Please search something!",
+            icon: "warning",
+            button: "Okay",
+        });
+
     }
     else {
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
@@ -14,16 +21,21 @@ const searchPhone = () => {
         searchField.value = '';
     }
 }
-// searchPhone();
+
+// Function for display search results
 const loadSearch = allPhones => {
     if (allPhones.length === 0) {
-        window.alert("No phone's Found !!")
+        swal({
+            title: "Sorry !!!",
+            text: "No phone's found!",
+            icon: "warning",
+            button: "Try Again",
+        });
     } else {
         const status = document.getElementById('status');
         status.textContent = '';
         const p = document.createElement('p');
         p.classList.add('h4');
-
         // console.log(allPhones);
         const parent = document.getElementById('parent-container');
         parent.textContent = '';
@@ -32,17 +44,16 @@ const loadSearch = allPhones => {
         status.appendChild(p);
         // console.log(phones);
         for (const phone of phones) {
-            console.log(phone);
+            // console.log(phone);
             const div = document.createElement('div');
             div.classList.add('col');
-
             div.innerHTML = `
         <div class="card rounded-lg">
                   <img src="${phone.image}" class="card-img-top w-50 mx-auto my-4">
                   <div class="card-body d-flex flex-column  align-items-center">
                   <h2> <span class="fw-bold">Brand:</span> ${phone.brand}</h2>
                   <h2> <span class="fw-bold">Model:</span> ${phone.phone_name}</h2>
-                  <button onclick='detailsLoad("${phone.slug}")' class="mt-3 px-5 py-0.5 rounded-xl bg-pink-600 text-white">Details</button>
+                  <a href="#view"><button onclick='detailsLoad("${phone.slug}")' class="mt-3 px-5 py-0.5 rounded-xl bg-pink-600 text-white">Details</button></a>
                   </div>
                 </div>
         `;
@@ -51,36 +62,79 @@ const loadSearch = allPhones => {
     }
 }
 
+// Function for Display all results
+
+// const seeMore = (searchText) => {
+//     const seeAll = document.getElementById('seeAll-btn');
+//     const div = document.createElement('div');
+//     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
+//         fetch(url)
+//             .then(res => res.json())
+//             .then(dataset => loadAll(dataset.data))
+
+//     }
+// // searchPhone();
+// const loadAll = phones => {
+//     const seeAll = document.getElementById('seeAll-btn');
+//     const div = document.createElement('div');
+//         for (const phone of phones) {
+//             // console.log(phone);
+//             const div = document.createElement('div');
+//             div.classList.add('col');
+//             div.innerHTML = `
+//         <div class="card rounded-lg">
+//                   <img src="${phone.image}" class="card-img-top w-50 mx-auto my-4">
+//                   <div class="card-body d-flex flex-column  align-items-center">
+//                   <h2> <span class="fw-bold">Brand:</span> ${phone.brand}</h2>
+//                   <h2> <span class="fw-bold">Model:</span> ${phone.phone_name}</h2>
+//                   <a href="#view"><button onclick='detailsLoad("${phone.slug}")' class="mt-3 px-5 py-0.5 rounded-xl bg-pink-600 text-white">Details</button></a>
+//                   </div>
+//                 </div>
+//         `;
+//             seeAll.appendChild(div);
+//         }
+//     }
+
+
+// Function for fetch result details
 const detailsLoad = id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
         .then(res => res.json())
         .then(dataset => displayDetails(dataset.data))
-    // console.log(id);
 }
 
+// Function for display details
 const displayDetails = details => {
-    console.log(details);
-
     const display = document.getElementById('details-card');
+    display.textContent = '';
     const div = document.createElement('div');
-    // div.classList.add('div');
+
     div.innerHTML = `
-                <div class="row card rounded-lg ">
-                <div class="col">
-                <img src="${details.image}" class="card-img-top w-25 mx-auto my-4">
-                </div>
-                <div class="col">
-                <div class="card-body d-flex flex-column  align-items-center">
-                <h2> <span class="fw-bold">Brand:</span> ${details.brand}</h2>
-                <h2> <span class="fw-bold">Model:</span> ${details.name}</h2>
-                <h2> <span class="fw-bold">Release :</span> ${details.releaseDate}</h2>
-                <h2> <span class="fw-bold">Bluetooth:</span> ${details.others.Bluetooth}</h2>
-                <h2> <span class="fw-bold">Sensors:</span> ${details.mainFeatures.sensors}</h2>
-                </div>
-                </div>
-                </div>
+    <div class="row rounded-lg border-3 border-danger">
+    <div class="col-12 col-lg-4 bg-white ">
+        <img src="${details.image}" class=" w-1/2 lg:w-3/4 mx-auto my-4">
+    </div>
+    <div class="col-12 col-lg-8 my-auto py-2">
+        <div>
+            <h3> <span class="fw-bold">Brand:</span> ${details.brand}.</h3>
+            <h3> <span class="fw-bold">Model:</span> ${details.name}.</h3>
+            <h3> <span class="fw-bold">Release :</span> ${details?.releaseDate}.</h3>
+            <h3> <span class="fw-bold">Bluetooth:</span> ${details?.others?.Bluetooth}.</h3>
+            <h3> <span class="fw-bold">WLAN:</span> ${details?.others?.WLAN}.</h3>
+            <h3> <span class="fw-bold">GPS:</span> ${details?.others?.GPS}.</h3>
+            <h3> <span class="fw-bold">USB:</span> ${details?.others?.USB}.</h3>
+            <h3> <span class="fw-bold">Display:</span> ${details?.mainFeatures?.displaySize}.</h3>
+            <h3> <span class="fw-bold">ChipSet:</span> ${details?.mainFeatures?.chipSet}.</h3>
+            <h3> <span class="fw-bold">Sensors:</span> ${details?.mainFeatures?.sensors}.</h3>
+            <h3> <span class="fw-bold">Storage:</span> ${details?.mainFeatures?.storage}.</h3>
+            <h3> <span class="fw-bold">Memory:</span> ${details?.mainFeatures?.memory}.</h3>
+            
+        </div>
+    </div>
+</div>
         `;
     display.appendChild(div);
 
 }
+
