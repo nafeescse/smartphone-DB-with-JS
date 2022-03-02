@@ -9,10 +9,10 @@ const searchPhone = () => {
             text: "Please search something!",
             icon: "warning",
             button: "Okay",
-        });
-
+        })
     }
     else {
+        document.getElementById('spinner').style.display = 'block';
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
         fetch(url)
             .then(res => res.json())
@@ -24,6 +24,7 @@ const searchPhone = () => {
 
 // Function for display search results
 const loadSearch = allPhones => {
+    document.getElementById('spinner').style.display = 'none';
     if (allPhones.length === 0) {
         swal({
             title: "Sorry !!!",
