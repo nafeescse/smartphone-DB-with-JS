@@ -83,11 +83,11 @@ const displayDetails = details => {
         <div>
             <h3> <span class="fw-bold">Brand:</span> ${details.brand}.</h3>
             <h3> <span class="fw-bold">Model:</span> ${details.name}.</h3>
-            <h3> <span class="fw-bold">Release :</span> ${details?.releaseDate}.</h3>
-            <h3> <span class="fw-bold">Bluetooth:</span> ${details?.others?.Bluetooth}.</h3>
-            <h3> <span class="fw-bold">WLAN:</span> ${details?.others?.WLAN}.</h3>
-            <h3> <span class="fw-bold">GPS:</span> ${details?.others?.GPS}.</h3>
-            <h3> <span class="fw-bold">USB:</span> ${details?.others?.USB}.</h3>
+            <h3> <span class="fw-bold">Release :</span> ${details?.releaseDate ? details?.releaseDate : 'Not Found'}.</h3>
+            <h3> <span class="fw-bold">Bluetooth:</span> ${details.others?.Bluetooth ? details.others?.Bluetooth : "Not found"}.</h3>
+            <h3> <span class="fw-bold">WLAN:</span> ${details.others?.WLAN ? details.others?.WLAN : 'Not found'}.</h3>
+            <h3> <span class="fw-bold">GPS:</span> ${details.others?.GPS ? details.others?.GPS : 'Not found'}.</h3>
+            <h3> <span class="fw-bold">USB:</span> ${details?.others?.USB ? details?.others?.USB : 'Not found'}.</h3>
             <h3> <span class="fw-bold">Display:</span> ${details?.mainFeatures?.displaySize}.</h3>
             <h3> <span class="fw-bold">ChipSet:</span> ${details?.mainFeatures?.chipSet}.</h3>
             <h3> <span class="fw-bold">Sensors:</span> ${details?.mainFeatures?.sensors}.</h3>
